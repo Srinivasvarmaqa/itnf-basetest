@@ -17,6 +17,7 @@ import com.itt.basetest.ITTBaseTest;
 import com.itt.basetest.utils.CommonUtils;
 import com.itt.datamodelfactoryhelper.ITTDataModelHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
+import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelHelperFactory;
 
 public class TestDataProviders extends ITTBaseTest {
 
@@ -25,7 +26,9 @@ public class TestDataProviders extends ITTBaseTest {
 	private final static String testDataDir = System.getProperty("user.dir") + FILE_SEPARATOR + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR
 			+ "resources" + FILE_SEPARATOR + "TestData" + FILE_SEPARATOR;
 	private final static String OMS = "oms";
+	private final static String ITRADE_ORDER = "itradeorder";
 	OMSDataModelHelperFactory omsDataModelHelperFactory;
+	ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory;
 
 	@DataProvider
 	public Object[][] testDataProvider(final ITestContext context,
@@ -65,15 +68,20 @@ public class TestDataProviders extends ITTBaseTest {
 				}
 
 				switch (product.toLowerCase()) {
-					case OMS :
-						omsDataModelHelperFactory = ittDataModelHelperFactory.getOmsDataModelHelperFactory();
-						omsDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, OMSDataModelHelperFactory.class);
-						break;
-					default :
-						LOG.error("Error! unknown product name: " + product);
-						throw new Exception("Incorrect product Name");
-				}
-				result.add(new Object[]{omsDataModelHelperFactory});
+				case OMS :
+					omsDataModelHelperFactory = ittDataModelHelperFactory.getOmsDataModelHelperFactory();
+					omsDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, OMSDataModelHelperFactory.class);
+					result.add(new Object[]{omsDataModelHelperFactory});
+					break;
+				case ITRADE_ORDER :
+					itradeOrderDataModelHelperFactory = ittDataModelHelperFactory.getItradeOrderDataModelHelperFactory();
+					itradeOrderDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, ItradeOrderDataModelHelperFactory.class);
+					result.add(new Object[]{itradeOrderDataModelHelperFactory});
+					break;
+				default :
+					LOG.error("Error! unknown product name: " + product);
+					throw new Exception("Incorrect product Name");
+			}
 			}
 			if (result.size() <= 0) {
 				throw new Error("Test Data CSV File is Empty");
