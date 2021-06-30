@@ -15,13 +15,14 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 
 import com.itt.automation.customreporting.CustomEmailableReport;
+import com.itt.automation.customreporting.SuiteListener;
 import com.itt.automation.screenshot.ScreenShotUtility;
 import com.itt.businesshelperfactory.ITTBusinessHelperFactory;
 import com.itt.common.BrowserInfo;
 import com.itt.datamodelfactoryhelper.ITTDataModelHelperFactory;
 import com.itt.factoryhelper.BrowserHelperFactory;
 
-@Listeners({ScreenShotUtility.class, CustomEmailableReport.class })
+@Listeners({ScreenShotUtility.class, CustomEmailableReport.class , SuiteListener.class})
 public class ITTBaseTest {
 	private static final Logger LOG = LoggerFactory.getLogger(ITTBaseTest.class);
 
