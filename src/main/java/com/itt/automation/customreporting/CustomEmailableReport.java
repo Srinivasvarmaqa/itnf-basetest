@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,8 +28,6 @@ import org.testng.log4testng.Logger;
 import org.testng.reporters.EmailableReporter;
 import org.testng.xml.XmlSuite;
 
-import com.itt.basetest.utils.CommonUtils;
-
 public class CustomEmailableReport implements IReporter {
 	private static final Logger L = Logger.getLogger(EmailableReporter.class);
 	private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(CustomEmailableReport.class);
@@ -45,6 +42,15 @@ public class CustomEmailableReport implements IReporter {
 	private Integer m_testIndex;
 
 	private int m_methodIndex;
+	int qty_tests = 0;
+	int qty_pass_m = 0;
+	int qty_pass_s = 0;
+	int qty_skip = 0;
+	int qty_fail = 0;
+	String BrowserName = "";
+	String BrowserVersion = "";
+	String AppUrl = "";
+	String TestEnvironment = "";
 
 	// ~ Methods --------------------------------------------------------------
 
@@ -349,8 +355,6 @@ public class CustomEmailableReport implements IReporter {
 				r.add(im);
 			}
 		}
-		// Arrays.sort(r.toArray(new IInvokedMethod[r.size()]), new
-		// TestSorter());
 		List<ITestNGMethod> result = Lists.newArrayList();
 
 		// Add all the invoked methods
@@ -359,7 +363,6 @@ public class CustomEmailableReport implements IReporter {
 		}
 
 		// Add all the methods that weren't invoked (e.g. skipped) that we
-		// haven't added yet
 		for (ITestNGMethod m : tests.getAllMethods()) {
 			if (!result.contains(m)) {
 				result.add(m);
@@ -416,17 +419,10 @@ public class CustomEmailableReport implements IReporter {
 
 				q = overview.getPassedTests().size();
 				qty_pass_s += q;
-
-				if (CommonUtils.isRetryFailedTestEnabled())
-					q = getMethodSet(overview.getSkippedTests(), suite).size()/2;
-				else 
-					q = getMethodSet(overview.getSkippedTests(), suite).size();
-				qty_skip += q;
-				if (CommonUtils.isRetryFailedTestEnabled())
-					q = getMethodSet(overview.getFailedTests(), suite).size()/2;
-				else 
-					q = getMethodSet(overview.getFailedTests(), suite).size();
 				
+				q = getMethodSet(overview.getSkippedTests(), suite).size();
+				qty_skip += q;
+				q = overview.getFailedTests().size();
 				qty_fail += q;
 
 				time_start = Math.min(overview.getStartDate().getTime(),
@@ -467,7 +463,6 @@ public class CustomEmailableReport implements IReporter {
 			tableColumnStart("Browser<br/>Name");
 			tableColumnStart("Browser<br/>Version");
 			m_out.println("</tr>");
-			//m_out.println("<tr class=\"total\"><td>Total Execution Time</td>");
 			summaryCell(qty_tests, Integer.MAX_VALUE);
 			summaryCell(qty_pass_m, Integer.MAX_VALUE);
 			summaryCell(qty_pass_s, Integer.MAX_VALUE);
@@ -475,10 +470,6 @@ public class CustomEmailableReport implements IReporter {
 			summaryCell(Math.round(qty_fail), 0);
 			summaryCell(formatter.format((time_end - time_start) / 1000.)
 					+ " seconds", true);
-			//m_out.println("<td colspan=\"2\">&nbsp;</td></tr>");
-
-
-
 			summaryCell(new String[]{AppUrl});
 			summaryCell(new String[]{TestEnvironment});
 			summaryCell(new String[]{BrowserName});
@@ -499,18 +490,10 @@ public class CustomEmailableReport implements IReporter {
 		tableColumnStart("Total Time<br/>in Seconds");
 		m_out.println("</tr>");
 		NumberFormat formatter = new DecimalFormat("#,##0.0");
-		int qty_tests = 0;
-		int qty_pass_m = 0;
-		int qty_pass_s = 0;
-		int qty_skip = 0;
-		int qty_fail = 0;
+
 		long time_start = Long.MAX_VALUE;
 		long time_end = Long.MIN_VALUE;
 		m_testIndex = 1;
-		String BrowserName = "";
-		String BrowserVersion = "";
-		String AppUrl = "";
-		String TestEnvironment = "";
 		m_out.print("<b>DETAILS:</b>");
 		for (ISuite suite : suites) {
 			if (suites.size() > 1) {
@@ -527,24 +510,23 @@ public class CustomEmailableReport implements IReporter {
 				
 				float q = getMethodSet(overview.getPassedTests(), suite).size();
 				qty_pass_m += q;
-				summaryCell(Math.round(q/2), Integer.MAX_VALUE);
+				summaryCell(Math.round(q), Integer.MAX_VALUE);
 				q = overview.getPassedTests().size();
 				qty_pass_s += q;
-				summaryCell(Math.round(q/2), Integer.MAX_VALUE);
+				summaryCell(Math.round(q), Integer.MAX_VALUE);
 				q = getMethodSet(overview.getSkippedTests(), suite).size();
 				qty_skip += q;
-				summaryCell(Math.round(q/2), 0);
-				q = getMethodSet(overview.getFailedTests(), suite).size();
+				summaryCell(Math.round(q), 0);
+				q = overview.getFailedTests().size();
 				qty_fail += q;
-				summaryCell(Math.round(q/2), 0);
+
+				summaryCell(Math.round(q), 0);
 				time_start = Math.min(overview.getStartDate().getTime(),
 						time_start);
 				time_end = Math.max(overview.getEndDate().getTime(), time_end);
 				summaryCell(formatter
 						.format((overview.getEndDate().getTime()
 								- overview.getStartDate().getTime()) / 1000.), true);
-//				summaryCell(overview.getIncludedGroups());
-//				summaryCell(overview.getExcludedGroups());
 
 				if (overview != null
 						&& overview.getAttribute("APP_URL") != null) {
@@ -564,40 +546,11 @@ public class CustomEmailableReport implements IReporter {
 					BrowserVersion = overview.getAttribute("BROWSER_VERSION").toString();
 				}
 
-
-//				summaryCell(new String[]{AppUrl});
-//				summaryCell(new String[]{TestEnvironment});
-//				summaryCell(new String[]{BrowserName});
-//				summaryCell(new String[]{BrowserVersion});
-
 				m_out.println("</tr>");
 				m_testIndex++;
 			}
 		}
 		m_out.println("</table>");
-		
-		/*if (qty_tests > 1) {
-			tableStart("testOverview", null);
-			m_out.print("<tr>");
-			tableColumnStart("Total Tests");
-			tableColumnStart("Methods<br/>Passed");
-			tableColumnStart("Scenarios<br/>Passed");
-			tableColumnStart("# skipped");
-			tableColumnStart("# failed");
-			tableColumnStart("Total Execution Time");
-			m_out.println("</tr>");
-			//m_out.println("<tr class=\"total\"><td>Total Execution Time</td>");
-			summaryCell(qty_tests, Integer.MAX_VALUE);
-			summaryCell(qty_pass_m, Integer.MAX_VALUE);
-			summaryCell(qty_pass_s, Integer.MAX_VALUE);
-			summaryCell(qty_skip/2, 0);
-			summaryCell(qty_fail/2, 0);
-			summaryCell(formatter.format((time_end - time_start) / 1000.)
-					+ " seconds", true);
-			//m_out.println("<td colspan=\"2\">&nbsp;</td></tr>");
-			m_out.println("</tr>");
-		}
-		m_out.println("</table>");*/
 	}
 
 	private void summaryCell(String[] val) {
@@ -685,29 +638,5 @@ public class CustomEmailableReport implements IReporter {
 	/** Finishes HTML stream */
 	protected void endHtml(PrintWriter out) {
 		out.println("</body></html>");
-	}
-
-	// ~ Inner Classes --------------------------------------------------------
-	/** Arranges methods by classname and method name */
-	private static final class TestSorter
-			implements
-				Comparator<IInvokedMethod> {
-		// ~ Methods
-		// -------------------------------------------------------------
-
-		/** Arranges methods by classname and method name */
-		@Override
-		public int compare(IInvokedMethod o1, IInvokedMethod o2) {
-			// System.out.println("Comparing " + o1.getMethodName() + " " +
-			// o1.getDate()
-			// + " and " + o2.getMethodName() + " " + o2.getDate());
-			return (int) (o1.getDate() - o2.getDate());
-			// int r = ((T) o1).getTestClass().getName().compareTo(((T)
-			// o2).getTestClass().getName());
-			// if (r == 0) {
-			// r = ((T) o1).getMethodName().compareTo(((T) o2).getMethodName());
-			// }
-			// return r;
-		}
 	}
 }
