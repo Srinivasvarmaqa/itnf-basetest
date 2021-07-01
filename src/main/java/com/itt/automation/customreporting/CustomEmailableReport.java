@@ -453,10 +453,9 @@ public class CustomEmailableReport implements IReporter {
 			tableStart("testOverview", null);
 			m_out.print("<tr>");
 			tableColumnStart("Total Tests");
-			tableColumnStart("Methods<br/>Passed");
-			tableColumnStart("Scenarios<br/>Passed");
-			tableColumnStart("# skipped");
-			tableColumnStart("# failed");
+			tableColumnStart("# Passed");
+			tableColumnStart("# Skipped");
+			tableColumnStart("# Failed");
 			tableColumnStart("Total Execution Time");
 			tableColumnStart("APP_URL");
 			tableColumnStart("ENVIRONMENT");
@@ -464,7 +463,6 @@ public class CustomEmailableReport implements IReporter {
 			tableColumnStart("Browser<br/>Version");
 			m_out.println("</tr>");
 			summaryCell(qty_tests, Integer.MAX_VALUE);
-			summaryCell(qty_pass_m, Integer.MAX_VALUE);
 			summaryCell(qty_pass_s, Integer.MAX_VALUE);
 			summaryCell(Math.round(qty_skip), 0);
 			summaryCell(Math.round(qty_fail), 0);
@@ -483,10 +481,9 @@ public class CustomEmailableReport implements IReporter {
 		tableStart("testOverview", null);
 		m_out.print("<tr>");
 		tableColumnStart("Test");
-		tableColumnStart("Methods<br/>Passed");
-		tableColumnStart("Scenarios<br/>Passed");
-		tableColumnStart("# skipped");
-		tableColumnStart("# failed");
+		tableColumnStart("# Passed");
+		tableColumnStart("# Skipped");
+		tableColumnStart("# Failed");
 		tableColumnStart("Total Time<br/>in Seconds");
 		m_out.println("</tr>");
 		NumberFormat formatter = new DecimalFormat("#,##0.0");
@@ -509,8 +506,6 @@ public class CustomEmailableReport implements IReporter {
 				
 				
 				float q = getMethodSet(overview.getPassedTests(), suite).size();
-				qty_pass_m += q;
-				summaryCell(Math.round(q), Integer.MAX_VALUE);
 				q = overview.getPassedTests().size();
 				qty_pass_s += q;
 				summaryCell(Math.round(q), Integer.MAX_VALUE);
