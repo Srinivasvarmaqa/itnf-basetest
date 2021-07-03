@@ -7,6 +7,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 import com.itt.businesshelperfactory.ITTBusinessHelperFactory;
+import com.itt.datamodelfactoryhelper.ITTDataModelHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelLoginUsers;
 import com.itt.oms.helper.OMSHelperFactory;
@@ -30,6 +31,7 @@ public class OMSBaseTest extends ITTBaseTest {
 		oMSHelperFactory = ittBusinessHelperFactory.getOMSHelperFactory();
 		oMSLoginPage = oMSHelperFactory.getOMSLoginPage();
 		mainWindowPage = oMSHelperFactory.getmainWindowPage();
+		ittDataModelHelperFactory = ITTDataModelHelperFactory.getInstance();
 		omsDataModelHelperFactory = ittDataModelHelperFactory.getOmsDataModelHelperFactory();
 		oMSLobLaws = omsDataModelHelperFactory.getOmsDataModelLoginUsers();
 	}
