@@ -93,7 +93,7 @@ public class CustomEmailableReport implements IReporter {
 		new File(outdir).mkdirs();
 
 		return new PrintWriter(new BufferedWriter(
-				new FileWriter(new File(outdir, "emailable-report.html"))));
+				new FileWriter(new File(outdir, "custom-emailable-report.html"))));
 	}
 
 	/**
