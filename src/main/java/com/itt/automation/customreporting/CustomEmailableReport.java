@@ -403,7 +403,6 @@ public class CustomEmailableReport implements IReporter {
 		long time_start = Long.MAX_VALUE;
 		long time_end = Long.MIN_VALUE;
 		m_testIndex = 1;
-
 		for (ISuite suite : suites) {
 			if (suites.size() > 1) {
 				titleRow(suite.getName(), 8);
