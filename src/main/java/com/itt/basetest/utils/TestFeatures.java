@@ -13,5 +13,5 @@ public final class TestFeatures {
 	}
 
 	public static final String OMS = "OMS";
-	public static final String ITRADE_ORDER = "ITRADEORDER";
+	public static final String ITRADEORDER = "ITRADEORDER";
 }

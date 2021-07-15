@@ -26,7 +26,7 @@ public class TestDataProviders extends ITTBaseTest {
 	private final static String testDataDir = System.getProperty("user.dir") + FILE_SEPARATOR + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR
 			+ "resources" + FILE_SEPARATOR + "TestData" + FILE_SEPARATOR;
 	private final static String OMS = "oms";
-	private final static String ITRADE_ORDER = "itradeorder";
+	private final static String ITRADEORDER = "itradeorder";
 	OMSDataModelHelperFactory omsDataModelHelperFactory;
 	ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory;
 
@@ -73,7 +73,7 @@ public class TestDataProviders extends ITTBaseTest {
 					omsDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, OMSDataModelHelperFactory.class);
 					result.add(new Object[]{omsDataModelHelperFactory});
 					break;
-				case ITRADE_ORDER :
+				case ITRADEORDER :
 					itradeOrderDataModelHelperFactory = ittDataModelHelperFactory.getItradeOrderDataModelHelperFactory();
 					itradeOrderDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, ItradeOrderDataModelHelperFactory.class);
 					result.add(new Object[]{itradeOrderDataModelHelperFactory});
