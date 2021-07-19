@@ -12,7 +12,7 @@ public class RetryAnalyzerOnTimeoutFailure implements IRetryAnalyzer{
 
 	public boolean retry(ITestResult result) {
 		
-		if (result.getThrowable().toString().contains("TimeoutException")) {
+		if (result.getThrowable().toString().contains("concurrent.TimeoutException")) {
 			if (counter < retryLimit) {
 				counter++;
 				return true;
