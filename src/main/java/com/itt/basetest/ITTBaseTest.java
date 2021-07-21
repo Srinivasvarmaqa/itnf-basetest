@@ -21,6 +21,10 @@ import com.itt.businesshelperfactory.ITTBusinessHelperFactory;
 import com.itt.common.BrowserInfo;
 import com.itt.datamodelfactoryhelper.ITTDataModelHelperFactory;
 import com.itt.factoryhelper.BrowserHelperFactory;
+import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelHelperFactory;
+import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
+import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
+import com.itt.oms.helper.OMSHelperFactory;
 
 @Listeners({ScreenShotUtility.class, CustomEmailableReport.class , SuiteListener.class})
 public class ITTBaseTest {
@@ -29,10 +33,15 @@ public class ITTBaseTest {
     public static BrowserInfo browserInfo;
     public ITTBusinessHelperFactory ittBusinessHelperFactory;
     protected ITTDataModelHelperFactory ittDataModelHelperFactory;
+	protected ItradeOrderHelperFactory itradeOrderHelperFactory;
+	protected ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory;
+	protected OMSDataModelHelperFactory omsDataModelHelperFactory;
+	protected OMSHelperFactory oMSHelperFactory;
     protected String APP_URL;
     protected String HUB_URL;
     protected String BROWSER;
     protected String TEST_EXECUTION_ENVIRONMENT;
+
    
     /**
 	 * BeforeSuite operations. Add operations that need to be done at global level
@@ -122,6 +131,10 @@ public class ITTBaseTest {
 		};
 		BrowserHelperFactory.initBrowserDriver(browserInfo);
 		BrowserHelperFactory.getBrowserDriver().invokeDriver();
+		itradeOrderHelperFactory = ittBusinessHelperFactory.getItradeOrderHelperFactory();
+		omsDataModelHelperFactory = ittDataModelHelperFactory.getOmsDataModelHelperFactory();
+		oMSHelperFactory = ittBusinessHelperFactory.getOMSHelperFactory();
+
 		LOG.info("BROWSER VERSION:" + browserInfo.getBrowserVersion());
 		context.setAttribute("BROWSER_NAME", browserInfo.getBrowser());
 		context.setAttribute("BROWSER_VERSION", browserInfo.getBrowserVersion());
