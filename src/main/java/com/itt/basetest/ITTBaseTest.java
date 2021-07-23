@@ -25,6 +25,7 @@ import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelHelperFactory;
 import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 import com.itt.oms.helper.OMSHelperFactory;
+import com.itt.omsrewrite.helper.OMSRewriteHelperFactory;
 
 @Listeners({ScreenShotUtility.class, CustomEmailableReport.class , SuiteListener.class})
 public class ITTBaseTest {
@@ -37,6 +38,7 @@ public class ITTBaseTest {
 	protected ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory;
 	protected OMSDataModelHelperFactory omsDataModelHelperFactory;
 	protected OMSHelperFactory oMSHelperFactory;
+	protected OMSRewriteHelperFactory oMSRewriteHelperFactory;
     protected String APP_URL;
     protected String HUB_URL;
     protected String BROWSER;
@@ -134,6 +136,7 @@ public class ITTBaseTest {
 		itradeOrderHelperFactory = ittBusinessHelperFactory.getItradeOrderHelperFactory();
 		omsDataModelHelperFactory = ittDataModelHelperFactory.getOmsDataModelHelperFactory();
 		oMSHelperFactory = ittBusinessHelperFactory.getOMSHelperFactory();
+		oMSRewriteHelperFactory = ittBusinessHelperFactory.getOMSRewriteHelperFactory();
 
 		LOG.info("BROWSER VERSION:" + browserInfo.getBrowserVersion());
 		context.setAttribute("BROWSER_NAME", browserInfo.getBrowser());
