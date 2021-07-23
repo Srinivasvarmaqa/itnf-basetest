@@ -14,4 +14,5 @@ public final class TestFeatures {
 
 	public static final String OMS = "OMS";
 	public static final String ITRADEORDER = "ITRADEORDER";
+	public static final String OMSREWRITE = "OMSREWRITE";
 }
