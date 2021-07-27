@@ -57,6 +57,32 @@ public class CommonUtils {
 	/**
 	 * @return true if the Retry Failed Test in Config.properties
 	 */
+	public static boolean isFailureRecoveryForTimeoutEnabled() {
+		boolean isretryFailureRecoveryForTimeoutEnabledFlag = true;
+		if (System.getProperty("RETRY_ON_FAILURE_RECOVERY") != null) {
+			if (System.getProperty("RETRY_ON_FAILURE_RECOVERY").toLowerCase() == "false")
+				isretryFailureRecoveryForTimeoutEnabledFlag = false;
+			else
+				isretryFailureRecoveryForTimeoutEnabledFlag = true;
+		}  else {
+			try {
+				Properties prop = getConfigProperties();
+				if (null != prop.getProperty("retryFailedTestOnTimeout") && 0 != prop.getProperty("retryFailedTestOnTimeout").length()
+						&& "false".equalsIgnoreCase(prop.getProperty("retryFailedTestOnTimeout").trim())) {
+					isretryFailureRecoveryForTimeoutEnabledFlag = false;
+				} else {
+					isretryFailureRecoveryForTimeoutEnabledFlag = true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return isretryFailureRecoveryForTimeoutEnabledFlag;
+	}
+
+	/**
+	 * @return true if the Retry Failed Test in Config.properties
+	 */
 	public static int getNumberOfRetries() {
 		int numberOfRetries = 1;
 		if (System.getProperty("NUMBER_OF_RETRIES") != null) {

@@ -55,7 +55,7 @@ public class TestResultsParser  {
 			total_skipped_tests_firefox = Integer.parseInt(doc.getDocumentElement().getAttribute("skipped"));
  
 		} catch (Exception e) {
-			e.printStackTrace();
+			;
 		}
 		
                 try {

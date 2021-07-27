@@ -14,10 +14,12 @@ import com.itt.basetest.utils.CommonUtils;
 public class RetryListener implements IAnnotationTransformer2 {
 
 	public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
+
 		if (annotation.getRetryAnalyzer() == null && CommonUtils.isRetryFailedTestEnabled()) {
-				annotation.setRetryAnalyzer(RetryAnalyzer.class);
-			}	
-		}
+			annotation.setRetryAnalyzer(RetryAnalyzer.class);
+		} else if (annotation.getRetryAnalyzer() == null && CommonUtils.isFailureRecoveryForTimeoutEnabled())
+				annotation.setRetryAnalyzer(RetryAnalyzerOnTimeoutFailure.class);
+	}
 
 	@Override
 	public void transform(IConfigurationAnnotation annotation, Class testClass,
