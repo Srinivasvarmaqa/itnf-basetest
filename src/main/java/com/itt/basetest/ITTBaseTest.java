@@ -26,6 +26,8 @@ import com.itt.itradeorder.helper.ItradeOrderHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 import com.itt.oms.helper.OMSHelperFactory;
 import com.itt.omsrewrite.helper.OMSRewriteHelperFactory;
+import com.itt.spend.datamodelhelper.SPENDDataModelHelperFactory;
+import com.itt.spend.helper.SPENDHelperFactory;
 
 @Listeners({ScreenShotUtility.class, CustomEmailableReport.class , SuiteListener.class})
 public class ITTBaseTest {
@@ -38,6 +40,9 @@ public class ITTBaseTest {
 	protected ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory;
 	protected OMSDataModelHelperFactory omsDataModelHelperFactory;
 	protected OMSHelperFactory oMSHelperFactory;
+	protected SPENDDataModelHelperFactory spendDataModelHelperFactory;
+	protected SPENDHelperFactory sPENDHelperFactory;
+
 	protected OMSRewriteHelperFactory oMSRewriteHelperFactory;
     protected String APP_URL;
     protected String HUB_URL;
@@ -136,6 +141,9 @@ public class ITTBaseTest {
 		itradeOrderHelperFactory = ittBusinessHelperFactory.getItradeOrderHelperFactory();
 		omsDataModelHelperFactory = ittDataModelHelperFactory.getOmsDataModelHelperFactory();
 		oMSHelperFactory = ittBusinessHelperFactory.getOMSHelperFactory();
+		spendDataModelHelperFactory = ittDataModelHelperFactory.getSpendDataModelHelperFactory();
+		sPENDHelperFactory = ittBusinessHelperFactory.getSPENDHelperFactory();
+
 		oMSRewriteHelperFactory = ittBusinessHelperFactory.getOMSRewriteHelperFactory();
 
 		LOG.info("BROWSER VERSION:" + browserInfo.getBrowserVersion());
@@ -145,7 +153,7 @@ public class ITTBaseTest {
 		context.setAttribute("TEST_EXECUTION_ENVIRONMENT", TEST_EXECUTION_ENVIRONMENT);
 	}
     
-    @AfterTest
+   // @AfterTest
     public void afterTestITTBaseTest() throws Exception {
     	BrowserHelperFactory.getBrowserDriver().close();
     	BrowserHelperFactory.getBrowserDriver().quit();

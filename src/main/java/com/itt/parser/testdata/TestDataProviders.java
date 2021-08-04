@@ -17,6 +17,7 @@ import com.itt.basetest.ITTBaseTest;
 import com.itt.basetest.utils.CommonUtils;
 import com.itt.datamodelfactoryhelper.ITTDataModelHelperFactory;
 import com.itt.itradeorder.datamodelhelper.ItradeOrderDataModelHelperFactory;
+import com.itt.spend.datamodelhelper.SPENDDataModelHelperFactory;
 import com.itt.oms.datamodelhelper.OMSDataModelHelperFactory;
 
 public class TestDataProviders extends ITTBaseTest {
@@ -26,8 +27,10 @@ public class TestDataProviders extends ITTBaseTest {
 	private final static String testDataDir = System.getProperty("user.dir") + FILE_SEPARATOR + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR
 			+ "resources" + FILE_SEPARATOR + "TestData" + FILE_SEPARATOR;
 	private final static String OMS = "oms";
+	private final static String SPEND = "spend";
 	private final static String ITRADEORDER = "itradeorder";
 	OMSDataModelHelperFactory omsDataModelHelperFactory;
+	SPENDDataModelHelperFactory spendDataModelHelperFactory;
 	ItradeOrderDataModelHelperFactory itradeOrderDataModelHelperFactory;
 	private String testEnvironment;
 	private String product;
@@ -73,6 +76,11 @@ public class TestDataProviders extends ITTBaseTest {
 							omsDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, OMSDataModelHelperFactory.class);
 							datamodelobjects[i] = omsDataModelHelperFactory;
 							break;
+						case SPEND:
+							spendDataModelHelperFactory = ittDataModelHelperFactory.getSpendDataModelHelperFactory();
+							spendDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, SPENDDataModelHelperFactory.class);
+							datamodelobjects[i] = spendDataModelHelperFactory;
+							break;
 						case ITRADEORDER:
 							itradeOrderDataModelHelperFactory = ittDataModelHelperFactory.getItradeOrderDataModelHelperFactory();
 							itradeOrderDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, ItradeOrderDataModelHelperFactory.class);
@@ -101,6 +109,12 @@ public class TestDataProviders extends ITTBaseTest {
 						omsDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, OMSDataModelHelperFactory.class);
 						result.add(new Object[]{omsDataModelHelperFactory});
 						break;
+					case SPEND :
+						spendDataModelHelperFactory = ittDataModelHelperFactory.getSpendDataModelHelperFactory();
+						spendDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, SPENDDataModelHelperFactory.class);
+						result.add(new Object[]{spendDataModelHelperFactory});
+						break;
+
 					case ITRADEORDER :
 						itradeOrderDataModelHelperFactory = ittDataModelHelperFactory.getItradeOrderDataModelHelperFactory();
 						itradeOrderDataModelHelperFactory = objectMapper.treeToValue(testExecutionEnvironment, ItradeOrderDataModelHelperFactory.class);
